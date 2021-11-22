@@ -33,7 +33,7 @@ public class App  extends ZenRequest {
 
                 if(userChoice.equalsIgnoreCase("1")
                         || userChoice.equalsIgnoreCase("2")) {
-                    viewTickets(userChoice);
+                    viewTickets();
                 } else {
                     System.out.println("Unknown Option: Try again.");
                 }
