@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Zendesk">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Downloads/zendesk-java-client-master/src/main/java" />
+    </SOURCES>
+  </library>
+</component>
