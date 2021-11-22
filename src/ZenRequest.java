@@ -26,7 +26,7 @@ public class ZenRequest {
           URL url = new URL("https://zccnboyers.zendesk.com/api/v2/tickets.json");
           HttpURLConnection http = (HttpURLConnection)url.openConnection();
           http.setRequestProperty("Accept", "application/json");
-          http.setRequestProperty("Authorization", "Basic MDAtd2l0Y2hlcy1udW5jaW9zQGljbG91ZC5jb206d3VicWE4LXpld2d5aC1iZXRyZVA=");
+          http.setRequestProperty("Authorization", "Basic ");
 
           System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
           http.disconnect();
