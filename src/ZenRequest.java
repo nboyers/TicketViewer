@@ -1,6 +1,6 @@
 /**
  * Class that handles all the API
- * Calls to Zendesk
+ * Calls to Zendesk API
  */
 public class ZenRequest {
 
