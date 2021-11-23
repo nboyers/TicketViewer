@@ -7,17 +7,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="java" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES />
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/Downloads/zendesk-java-client-master/src/main/java" />
-          <root url="file://$USER_HOME$/Downloads/zendesk-java-client-master/src/test/java" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Zendesk" level="project" />
   </component>
 </module>

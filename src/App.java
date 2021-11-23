@@ -14,8 +14,6 @@ public class App  extends ZenRequest {
      * as for user input
      */
     private static void establishConnection() {
-
-      //  String host = "https://zccnboyers.zendesk.com/api/v2/tickets";
         String userChoice;
         Scanner sc = new Scanner(System.in);
 
@@ -33,11 +31,12 @@ public class App  extends ZenRequest {
 
                 if(userChoice.equalsIgnoreCase("1")
                         || userChoice.equalsIgnoreCase("2")) {
-                    viewTickets();
+                    viewTickets(userChoice);
                 } else {
-                    System.out.println("Unknown Option: Try again.");
+                    System.out.println("Not a valid option: Try again.");
                 }
-
+            } else if (userChoice.equalsIgnoreCase("quit")) {
+                System.out.println("Good Bye");
             } else {
                 System.out.println("Unknown Command: Try again.");
             }
