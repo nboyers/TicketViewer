@@ -1,8 +1,9 @@
 /*
 *
 * @author - Noah Boyers
-* Last Updated: 11/24/21
+* Last Updated: 11/23/21
  */
+
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 //TODO: Parse JSON DATA
 // Format to be readable by user
-// README file to tell user to make a directory for testing API
+// README file to tell user to make a directory for testing API / Basic credentials
 
 /**
  * ZenRequests.java does all the heavy lifting for the
@@ -22,7 +23,7 @@ import java.util.Scanner;
  */
 public class ZenRequest {
     // Used a text file as a placeholder for credentials
-    private final static String ZENDESK_RESOURCE_FILE = "/Users/laptop81/IdeaProjects/ZenDeskChallenge/src/testBuild.txt";
+    private final static String ZENDESK_RESOURCE_FILE = "/Users/laptop81/Desktop/ZendeskResources.txt";
 
     /**
      * Method that handles viewing of the tickets
@@ -61,7 +62,7 @@ public class ZenRequest {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             //TODO: Have connection to API, now just need to parse data
 
-            System.out.println(http.getResponseMessage()); // create connection test
+            System.out.println(http.getResponseMessage()); // test to create connection
 
         } catch (IOException e) {
             e.printStackTrace();

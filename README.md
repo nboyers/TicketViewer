@@ -1,6 +1,7 @@
 # ZendeskTicketViewer
 
 -----------
-### Prerequisite
-1. Change the 'URL' to the destination that you want to connect to and the password:username with the respected credentials in the ZendeskResources.txt file
-2. Run the program in the App.java file
+### Installation
+1. Create a txt file that has the URL on one line and the username:password on the next
+2. Save that in a location and state the path  to it in ZenREquest.java file in the variable ZENDESK_RESOURCE_FILE
+3. Run program using the App.java file
