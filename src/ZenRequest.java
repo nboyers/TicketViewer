@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 //TODO: Parse JSON DATA
 // Format to be readable by user
-// README file to tell user to make a directory for testing API / Basic credentials
+// README file to tell user to make a directory for testing API
 
 /**
  * ZenRequests.java does all the heavy lifting for the
