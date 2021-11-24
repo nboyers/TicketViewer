@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Scanner;
 
 //TODO: Parse JSON DATA
 // Format to be readable by user
@@ -22,25 +23,31 @@ import java.util.Base64;
  */
 public class ZenRequest {
     // Used a text file as a placeholder for credentials
-
-    // Used a text file as a placeholder for credentials
-    private final static String ZENDESK_RESOURCE_FILE = "/Users/laptop81/Desktop/ZendeskResources.txt";
+    private final static String ZENDESK_RESOURCE_FILE = "/Users/laptop81/IdeaProjects/ZenDeskChallenge/src/testBuild.txt";
 
     /**
      * Method that handles viewing of the tickets
      * @param userChoice - Option to see a single ticket or the first 25 tickets
      */
     public static void viewTickets(String userChoice){
-        //FIXME Add options of viewing the ticket
-        zenRequest();
-
+        Scanner scanner = new Scanner(System.in);
+        String ticketNumber ;
+        if(userChoice.equalsIgnoreCase("1")) {
+            //TODO: Create method that views ALL the tickets
+            zenRequest("1");
+        } else {
+            System.out.println("Enter a ticket number");
+            ticketNumber = scanner.next();
+            //TODO: Create method that views the ticket the user choses
+            zenRequest(ticketNumber);
+        }
     }
 
     /**
      * Connects to the Zendesk API
      * and tries to establish a connection
      */
-    private static void zenRequest(){
+    private static void zenRequest(String ticketNumber){
 
 // Establishes connection to Zendesk API
         try {
@@ -55,6 +62,7 @@ public class ZenRequest {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             //TODO: Have connection to API, now just need to parse data
 
+            System.out.println(http.getResponseMessage()); // test to create connection
 
         } catch (IOException e) {
             e.printStackTrace();

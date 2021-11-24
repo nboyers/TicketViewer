@@ -1,3 +1,8 @@
+/*
+ *
+ * @author - Noah Boyers
+ * Last Updated: 11/23/21
+ */
 
 import java.util.Scanner;
 
@@ -36,13 +41,12 @@ public class App  extends ZenRequest {
                     System.out.println("Not a valid option: Try again.");
                 }
             } else if (userChoice.equalsIgnoreCase("quit")) {
-                System.out.println("Good Bye");
+                sc.close(); //closes the scanner
             } else {
                 System.out.println("Unknown Command: Try again.");
             }
-
-        }while(!userChoice.equalsIgnoreCase("quit"));
-        sc.close();
-      }
+        } while(!userChoice.equalsIgnoreCase("quit"));
+        System.out.println("Thank you for using the viewer, Goodbye");
     }
+}
 
