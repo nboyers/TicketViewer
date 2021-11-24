@@ -4,7 +4,6 @@
 * Last Updated: 11/24/21
  */
 
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -62,7 +61,7 @@ public class ZenRequest {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             //TODO: Have connection to API, now just need to parse data
 
-            System.out.println(http.getResponseMessage()); // test to create connection
+            System.out.println(http.getResponseMessage()); // create connection test
 
         } catch (IOException e) {
             e.printStackTrace();
