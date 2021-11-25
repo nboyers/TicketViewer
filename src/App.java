@@ -1,16 +1,17 @@
 /*
  *
  * @Author - Noah Boyers
- * Last Updated: 11/23/21
+ * Last Updated: 11/24/21
  */
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
  * Main Class of the Ticket Viewer
  */
 public class App  extends ZenRequest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         establishConnection();
     }
 
@@ -18,7 +19,7 @@ public class App  extends ZenRequest {
      * Method called after the program starts to
      * as for user input
      */
-    private static void establishConnection() {
+    private static void establishConnection() throws IOException {
         String userChoice;
         Scanner sc = new Scanner(System.in);
 
@@ -34,8 +35,7 @@ public class App  extends ZenRequest {
                 System.out.println("* Type 'quit' to exit");
                 userChoice = sc.nextLine();
 
-                if(userChoice.equalsIgnoreCase("1")
-                        || userChoice.equalsIgnoreCase("2")) {
+                if(userChoice.equalsIgnoreCase("2")) {
                     viewTickets(userChoice);
                 } else {
                     System.out.println("Not a valid option: Try again.");
