@@ -1,26 +1,27 @@
 /*
 *
 * @author - Noah Boyers
-* Last Updated: 11/24/21
+* Last Updated: 11/27/21
  */
 import java.io.IOException;
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.Reader;
+
 import java.io.InputStreamReader;
 import java.io.FileReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.Objects;
+import com.google.gson.JsonArray;;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.JSONException;
-import org.json.JSONObject;
+
 
 //TODO:
-// Format to be readable by user (all tickets)
-// and cycle through to find specific ticket
-
+// Create Unit Testing
 
 /**
  * ZenRequests.java does all the heavy lifting for the
@@ -30,22 +31,135 @@ import org.json.JSONObject;
 public class ZenRequest {
     // Used a text file as a placeholder for credentials
     private final static String ZENDESK_RESOURCE_FILE = "/Users/laptop81/Desktop/ZendeskResources.txt";
+    private static int jsonValue;
+
+
+public ZenRequest(){}
+
     /**
      * Method that handles viewing of the tickets
      * @param userChoice - Option to see a single ticket or the first 25 tickets
      */
-    public static void viewTickets(String userChoice) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        int ticketNumber = Integer.parseInt(userChoice) ;
-        if(ticketNumber == 2) {
-            System.out.println("Enter a ticket number");
-            ticketNumber = scanner.nextInt();
-            System.out.println(readJsonFromUrl(ticketNumber));
-        } else {
-            readJsonFromUrl(0);
+    public void viewTickets(int userChoice) {
+        try {
+            String jsonResults = readJsonFromUrl();
+            JsonParser parser = new JsonParser();
+            JsonObject json = parser.parse(jsonResults).getAsJsonObject();
+            JsonArray results = json.getAsJsonArray("tickets");
+
+            if(userChoice != -1){ // Does NOT equal -1
+
+                if(isValuePresent(results, userChoice)){ // checks if id is in system
+                    printJsonResults(results, getKeyValue());
+                } else {
+                    System.out.println("No ticket with that ID is in the system.");
+                }
+            } else {
+                printJsonResults(results,-1);
+            }
+        } catch (InputMismatchException e){
+            System.out.println("Not a valid response. Please enter the ticket number");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Index out of bounds");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Prints the
+     * @param results - JSON File
+     * @param value - Value of the key given
+     */
+    private static void printJsonResults(JsonArray results, int value){
+        try {
+            if (value == -1){
+                for (int i = 0; i < results.size() -1; i++) {
+                    JsonObject result = results.get(i).getAsJsonObject();
+
+                    System.out.println("ID: " + result.get("id") +
+                            " Created at: " + result.get("created_at") +
+                            " Subject: " + result.get("subject")+
+                            " Status: " + result.get("status"));
+                }
+
+            } else {
+                JsonObject result = results.get(getKeyValue()).getAsJsonObject();
+                System.out.println("ID: " + result.get("id") +
+                        " Created at: " + result.get("created_at") +
+                        " Subject: " + result.get("subject"));
+            }
+        }catch (JSONException e){
+            System.out.println("No JSON file was found");
+        }
+    }
+
+    /**
+     * finds if there is a value at a given Key
+     * @param results - JSON in question
+     * @param jsonKey - Location of the
+     * @return - Value is/not at
+     */
+    private boolean isValuePresent(JsonArray results, int jsonKey){
+        for(int i = 0; i < results.size(); i++){
+            JsonObject result = results.get(i).getAsJsonObject();
+            if(Objects.equals(result.get("id").toString(), String.valueOf(jsonKey))){
+                setKeyValue(i);
+                return true;
+            }
+        }
+        return false;
+}
+
+    /**
+     * Setter for Value in a JSON file
+     * @param jsonValue - Value being passed
+     */
+    private void setKeyValue(int jsonValue){
+      ZenRequest.jsonValue = jsonValue;
+}
+
+    /**
+     * Getter to retrieve the
+     * value from the setValue() method
+     * @return - Value from the key
+     */
+    public static int getKeyValue(){
+        return jsonValue;
+}
+
+// DONE
+    /**
+     * Connects to the Zendesk API and returns the data
+     * from the server to the client
+     * @return - JSON data as a string
+     * @throws IOException - Could not read from JSON
+     * @throws JSONException - Could not find JSON
+     */
+    private static String readJsonFromUrl() throws IOException, JSONException {
+        //Declare Variables
+        BufferedReader reader = null;
+        try {
+            URL url = new URL(loadURL());
+            int read;
+            char[] chars = new char[1024];
+
+            // Get the connection object
+            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            http.setRequestProperty("Accept", "application/json");
+            http.setRequestProperty("Authorization", "Basic " + clientSecret());
+            reader = new BufferedReader(new InputStreamReader(http.getInputStream()));
+            StringBuilder buffer = new StringBuilder();
+
+            while ((read = reader.read(chars)) != -1)
+                buffer.append(chars, 0, read);
+
+            return buffer.toString();
+        } finally {
+            if (reader != null)
+                reader.close();
+        }
+    }
     /**
      * Reads the first line of a file and returns it as a string
      * This is where it will get the URL for zenRequest Method
@@ -55,7 +169,6 @@ public class ZenRequest {
         BufferedReader Buff = new BufferedReader(new FileReader(ZENDESK_RESOURCE_FILE));
         return Buff.readLine();
     }
-
     /**
      * Method that reads the config file
      * and returns the client auth
@@ -67,79 +180,5 @@ public class ZenRequest {
         //Converts username & password to base64 encoding
         return Base64.getEncoder().encodeToString((Buff.readLine()).getBytes(StandardCharsets.UTF_8));
     }
-
-    /**
-     * Establishes connection to Zendesk API
-     * and translates data
-     * @return - JSON data a string
-     */
-    public static JSONObject readJsonFromUrl(int ticketID) throws IOException, JSONException {
-        // Create URL objects
-        URL url = new URL(loadURL());
-
-        // Get the connection object
-        HttpURLConnection http = (HttpURLConnection) url.openConnection();
-        // Set the input stream allowed inputting data to the local machine
-        http.setDoOutput(true);
-
-        //Authentication
-        http.setRequestProperty("Accept", "application/json");
-        http.setRequestProperty("Authorization", "Basic " + clientSecret());
-        // Displays error code if not accepted
-        int responseCode = http.getResponseCode();
-        if (responseCode != 200)
-            throw new RuntimeException("HttpResponseCode: " + responseCode);
-
-
-        // Parses Data into a string with all the tickets
-        if(ticketID == 0) {
-            try (InputStream is = http.getInputStream()) {
-                BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                String jsonText = readAll(rd);
-                return new JSONObject(jsonText);
-            }
-        } else {
-            // Parses Data into a string with specific ticket
-            try (InputStream is = http.getInputStream()) {
-                BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                String jsonText = readAll(rd, ticketID);
-                return new JSONObject(jsonText);
-            }
-        }
-    }
-
-    /**
-     * Reads all the data from the JSON file
-     * @param rd -
-     * @return - the JSON as a string
-     * @throws IOException - if an I/O exception occurs
-     */
-    private static String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        //Reads each character and turns it into a string
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Overloaded method that finds the ticket with a certain ID tag
-     * @param rd - the reader of
-     * @param ticketNumber - the Ticket number the user wants to pull up
-     * @return - the Specific ticket
-     * @throws IOException - if an I/O exception occurs
-     */
-    private static String readAll(Reader rd, int ticketNumber) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-
-        return sb.toString();
-    }
-
 }
 
