@@ -1,8 +1,6 @@
 
 # ZendeskTicketViewer
-
-The program takes the data from Zendesk's Tciekt API and formats into clean and easy to read
-output for the user.
+Takes the data from Zendesk's Ticket API and formats into clean and easy to read output for the user
 
 
 
