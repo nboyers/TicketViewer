@@ -37,8 +37,7 @@ public class ZenRequest {
     /**
      * Default Constructor
      */
-    public ZenRequest() {
-    }
+    public ZenRequest() {}
 
     /**
      *
@@ -75,8 +74,7 @@ public class ZenRequest {
     }
 
     /**
-     * Prints the
-     *
+     * Prints the JSON file as a formatted String
      * @param results - JSON File
      * @param value   - Value of the key given
      */
