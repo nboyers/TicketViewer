@@ -41,11 +41,12 @@ public class ZenRequest {
     }
 
     /**
-     * Method that handles viewing of the tickets
      *
+     * Method that handles viewing of the tickets
      * @param userChoice - Option to see a single ticket or the first 25 tickets
+     * @return - Returns true if no errors, false if error is found
      */
-    public void ticketController(int userChoice) {
+    public boolean ticketController(int userChoice) {
         try {
             String jsonResults = readJsonFromUrl();
             JsonParser parser = new JsonParser();
@@ -55,11 +56,13 @@ public class ZenRequest {
             if (userChoice != -1) {
                 if (isValuePresent(results, userChoice)) { // checks if id is in system
                     System.out.println(printJsonResults(results, getKeyValue()));
+                    return true;
                 } else {
                     System.out.println("No ticket with that ID is in the system.");
                 }
             } else {
                 System.out.println(printJsonResults(results, -1));
+                return true;
             }
         } catch (InputMismatchException e) {
             System.out.println("Not a valid response. Please enter the ticket number");
@@ -68,6 +71,7 @@ public class ZenRequest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -251,6 +255,5 @@ public class ZenRequest {
     static void setSecret(String input){
         secret = input;
     }
-
 }
 

@@ -17,11 +17,10 @@ import java.lang.reflect.Field;
  */
 public class ZendeskUnitTest extends ZenRequest {
 
-    @Disabled
-    @DisplayName("Returns void, checking for incorrect inputs")
+    @Test
+    @DisplayName("Driver for the program")
     void ticketController() {
-       // assertEquals();
-
+        assertTrue(ticketController(-1));
     }
 
     @Test
