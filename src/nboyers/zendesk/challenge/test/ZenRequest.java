@@ -125,7 +125,6 @@ public class ZenRequest {
 
     /**
      * Finds if there is a value at a given Key
-     *
      * @param results - JSON in question
      * @param jsonKey - Value being checked
      * @return - Value is/not at the certain place in the JSON file
@@ -143,7 +142,6 @@ public class ZenRequest {
 
     /**
      * Setter for Value in a JSON file
-     *
      * @param jsonValue - Value being passed
      */
     void setKeyValue(int jsonValue) {
@@ -153,7 +151,6 @@ public class ZenRequest {
     /**
      * Getter to retrieve the
      * value from the setValue() method
-     *
      * @return - Value from the key
      */
     static int getKeyValue() {
@@ -163,7 +160,6 @@ public class ZenRequest {
     /**
      * Connects to the Zendesk API and returns the data
      * from the server to the client
-     *
      * @return - JSON data as a string
      * @throws IOException   - Could not read from JSON
      * @throws JSONException - Could not find JSON
@@ -204,7 +200,6 @@ public class ZenRequest {
     /**
      * Reads the first line of a file and returns it as a string
      * This is where it will get the URL for zenRequest Method
-     *
      * @return - URL as a string on line 1 of the file
      */
     static boolean loadURL() {
@@ -221,7 +216,6 @@ public class ZenRequest {
     /**
      * Method that reads the config file
      * and returns the client auth
-     *
      * @return - True if Secret was recd correctly / false if there was an error
      */
     static boolean clientSecret() {
@@ -239,7 +233,6 @@ public class ZenRequest {
 
     /**
      * Getter to retrieves the secret
-     *
      * @return - Secret as a String
      */
     static String getSecret() {
@@ -248,7 +241,6 @@ public class ZenRequest {
 
     /**
      * Method that sets the Client secret
-     *
      * @param input - encoded client secret
      */
     static void setSecret(String input) {
