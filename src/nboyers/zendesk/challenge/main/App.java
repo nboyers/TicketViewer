@@ -13,7 +13,6 @@ import java.util.Scanner;
 public class App extends ZenRequest {
     public static void main(String[] args) {
    establishConnection();
-
     }
 
     /**

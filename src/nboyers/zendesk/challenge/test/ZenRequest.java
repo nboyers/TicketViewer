@@ -40,7 +40,6 @@ public class ZenRequest {
     public ZenRequest() {}
 
     /**
-     *
      * Method that handles viewing of the tickets
      * @param userChoice - Option to see a single ticket or the first 25 tickets
      * @return - Returns true if no errors, false if error is found
@@ -125,11 +124,11 @@ public class ZenRequest {
     }
 
     /**
-     * finds if there is a value at a given Key
+     * Finds if there is a value at a given Key
      *
      * @param results - JSON in question
-     * @param jsonKey - Location of the
-     * @return - Value is/not at
+     * @param jsonKey - Value being checked
+     * @return - Value is/not at the certain place in the JSON file
      */
     boolean isValuePresent(JsonArray results, int jsonKey) {
         for (int i = 0; i < results.size(); i++) {
@@ -223,7 +222,7 @@ public class ZenRequest {
      * Method that reads the config file
      * and returns the client auth
      *
-     * @return - client pass as a Base64 encoding String
+     * @return - True if Secret was recd correctly / false if there was an error
      */
     static boolean clientSecret() {
         try {
@@ -240,6 +239,7 @@ public class ZenRequest {
 
     /**
      * Getter to retrieves the secret
+     *
      * @return - Secret as a String
      */
     static String getSecret() {
@@ -247,10 +247,11 @@ public class ZenRequest {
     }
 
     /**
-     * Method that sets the CLient secret
+     * Method that sets the Client secret
+     *
      * @param input - encoded client secret
      */
-    static void setSecret(String input){
+    static void setSecret(String input) {
         secret = input;
     }
 }
